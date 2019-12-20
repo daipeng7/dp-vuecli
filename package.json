@@ -1,0 +1,57 @@
+{
+  "name": "dp-vuecli",
+  "author": "daipeng7",
+  "version": "1.0.0",
+  "description": "vue cli",
+  "license": "ISC",
+  "homepage": "https://github.com/daipeng7/dp-vuecli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daipeng7/dp-vuecli.git"
+  },
+  "main": "index.js",
+  "bin": {
+    "dpvue": "./dist/bin/cli.js"
+  },
+  "scripts": {
+    "build": "node ./scripts/copy.js && cross-env NODE_ENV=production babel src -d ./ --copy-files | bunyan"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "bunyan": "^1.8.12",
+    "cross-env": "^6.0.3",
+    "didyoumean": "^1.2.1",
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^4.0.1",
+    "download-git-repo": "^3.0.2",
+    "ejs": "^3.0.1",
+    "execa": "^4.0.0",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.0.1",
+    "string.prototype.padstart": "^3.1.0",
+    "strip-ansi": "^6.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint",
+      "git add"
+    ]
+  }
+}
