@@ -2,7 +2,7 @@
  * @Author: daipeng
  * @Date: 2019-12-20 10:34:39
  * @LastEditors  : VSCode
- * @LastEditTime : 2019-12-20 13:49:48
+ * @LastEditTime : 2019-12-20 15:29:02
  * @Description:
  */
 
@@ -14,7 +14,6 @@ const packageJson = require('../../package.json');
 const cmdName = Object.keys(packageJson.bin)[0];
 
 didYouMean.threshold = 0.6;
-
 function camelize (str) {
 	return str.replace(/-(\w)/g, (_, c) => c ? c.toUpperCase() : '');
 }

@@ -11,10 +11,10 @@
   },
   "main": "index.js",
   "bin": {
-    "dpvue": "./dist/bin/cli.js"
+    "dpvue": "./src/bin/cli.js"
   },
   "scripts": {
-    "build": "node ./scripts/copy.js && cross-env NODE_ENV=production babel src -d ./ --copy-files | bunyan"
+    "build": "cross-env NODE_ENV=production babel src -d ./dist --copy-files | bunyan"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
@@ -40,6 +40,7 @@
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.1",
+    "ora": "^4.0.3",
     "string.prototype.padstart": "^3.1.0",
     "strip-ansi": "^6.0.0"
   },

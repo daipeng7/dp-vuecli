@@ -2,7 +2,7 @@
  * @Author: daipeng
  * @Date: 2019-12-20 11:03:49
  * @LastEditors  : VSCode
- * @LastEditTime : 2019-12-20 13:56:35
+ * @LastEditTime : 2019-12-20 15:12:45
  * @Description:
  */
 
@@ -14,6 +14,7 @@ const ejs = require('ejs');
 const inquirer = require('inquirer');
 const downloadGitRepo = require('download-git-repo');
 const { clearConsole } = require('../utils');
+const Creator = require('./Creator');
 
 const downGitRepoPromise = (url, to) => {
 	return new Promise((resolve, reject) => {
@@ -30,6 +31,7 @@ const create = async (name, options) => {
 		const inCurrent = name === '.';
 		dir = dir ? path.join(process.cwd(), dir) : process.cwd();
 		dir = path.resolve(dir, name);
+		debugger;
 		if (fs.pathExistsSync(dir)) {
 			if (force) fs.removeSync(dir);
 			else {
@@ -67,7 +69,7 @@ const create = async (name, options) => {
 
 		if (repository) await downGitRepoPromise(repository, dir);
 		else {
-
+			const creator = new Creator(name, options);
 		}
 	} catch (error) {
 		throw error;

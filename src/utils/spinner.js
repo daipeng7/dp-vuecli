@@ -1,3 +1,10 @@
+/*
+ * @Author: daipeng
+ * @Date: 2019-12-20 11:37:59
+ * @LastEditors: VSCode
+ * @LastEditTime: 2019-12-20 15:01:35
+ * @Description:
+ */
 const ora = require('ora');
 const chalk = require('chalk');
 
@@ -53,8 +60,3 @@ exports.resumeSpinner = () => {
 exports.failSpinner = (text) => {
 	spinner.fail(text);
 };
-
-// silent all logs except errors during tests and keep record
-if (process.env.VUE_CLI_TEST) {
-	require('./_silence')('spinner', exports);
-}
