@@ -1,18 +1,36 @@
 /*
- * @Author: daipeng
+ * @Author:
  * @Date: 2019-12-20 11:37:59
- * @LastEditors: VSCode
- * @LastEditTime: 2019-12-20 15:01:35
+ * @LastEditors  : VSCode
+ * @LastEditTime : 2019-12-25 16:44:02
  * @Description:
  */
 const ora = require('ora');
 const chalk = require('chalk');
 
-const spinner = ora();
+const spinner = ora({
+	spinner: {
+		interval: 100,
+		frames: [
+			'🕛',
+			'🕐',
+			'🕑',
+			'🕒',
+			'🕓',
+			'🕔',
+			'🕕',
+			'🕖',
+			'🕗',
+			'🕘',
+			'🕙',
+			'🕚'
+		]
+	}
+});
 let lastMsg = null;
 let isPaused = false;
 
-exports.logWithSpinner = (symbol, msg) => {
+exports.logWithSpinner = (symbol, msg, stopText) => {
 	if (!msg) {
 		msg = symbol;
 		symbol = chalk.green('✔');
@@ -20,13 +38,14 @@ exports.logWithSpinner = (symbol, msg) => {
 	if (lastMsg) {
 		spinner.stopAndPersist({
 			symbol: lastMsg.symbol,
-			text: lastMsg.text
+			text: lastMsg.stopText || lastMsg.text
 		});
 	}
 	spinner.text = ' ' + msg;
 	lastMsg = {
 		symbol: symbol + ' ',
-		text: msg
+		text: msg,
+		stopText
 	};
 	spinner.start();
 };
@@ -35,7 +54,7 @@ exports.stopSpinner = (persist) => {
 	if (lastMsg && persist !== false) {
 		spinner.stopAndPersist({
 			symbol: lastMsg.symbol,
-			text: lastMsg.text
+			text: lastMsg.stopText || lastMsg.text
 		});
 	} else {
 		spinner.stop();

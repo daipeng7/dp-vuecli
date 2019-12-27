@@ -1,8 +1,9 @@
+#!/usr/bin/env node
 /*
- * @Author: daipeng
+ * @Author:
  * @Date: 2019-12-20 10:34:39
  * @LastEditors  : VSCode
- * @LastEditTime : 2019-12-20 15:29:02
+ * @LastEditTime : 2019-12-20 16:20:28
  * @Description:
  */
 
@@ -14,6 +15,7 @@ const packageJson = require('../../package.json');
 const cmdName = Object.keys(packageJson.bin)[0];
 
 didYouMean.threshold = 0.6;
+
 function camelize (str) {
 	return str.replace(/-(\w)/g, (_, c) => c ? c.toUpperCase() : '');
 }
@@ -67,7 +69,7 @@ program
 	.arguments('<command>')
 	.action((cmd) => {
 		program.outputHelp();
-		console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`));
+		console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}`));
 		console.log();
 		suggestCommands(cmd);
 	});

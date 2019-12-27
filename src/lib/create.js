@@ -1,8 +1,8 @@
 /*
- * @Author: daipeng
+ * @Author:
  * @Date: 2019-12-20 11:03:49
  * @LastEditors  : VSCode
- * @LastEditTime : 2019-12-20 15:12:45
+ * @LastEditTime : 2019-12-24 14:44:26
  * @Description:
  */
 
@@ -15,6 +15,7 @@ const inquirer = require('inquirer');
 const downloadGitRepo = require('download-git-repo');
 const { clearConsole } = require('../utils');
 const Creator = require('./Creator');
+const { getPromptModules } = require('./promptModules');
 
 const downGitRepoPromise = (url, to) => {
 	return new Promise((resolve, reject) => {
@@ -31,7 +32,7 @@ const create = async (name, options) => {
 		const inCurrent = name === '.';
 		dir = dir ? path.join(process.cwd(), dir) : process.cwd();
 		dir = path.resolve(dir, name);
-		debugger;
+		let dirMode = false;
 		if (fs.pathExistsSync(dir)) {
 			if (force) fs.removeSync(dir);
 			else {
@@ -41,7 +42,7 @@ const create = async (name, options) => {
 						{
 							name: 'ok',
 							type: 'confirm',
-							message: `Generate project in current directory?`
+							message: `确定在当前目录创建项目?`
 						}
 					]);
 					if (!ok) return;
@@ -50,26 +51,24 @@ const create = async (name, options) => {
 						{
 							name: 'action',
 							type: 'list',
-							message: `Target directory ${chalk.cyan(dir)} already exists. Pick an action:`,
+							message: `${chalk.cyan(dir)} 已经存在, 请选择:`,
 							choices: [
-								{ name: 'Overwrite', value: 'overwrite' },
-								{ name: 'Merge', value: 'merge' },
-								{ name: 'Cancel', value: false }
+								{ name: '覆盖', value: 'overwrite' },
+								{ name: '合并', value: 'merge' },
+								{ name: '取消', value: false }
 							]
 						}
 					]);
 					if (!action) return;
-					else if (action === 'overwrite') {
-						console.log(`\nRemoving ${chalk.cyan(dir)}...`);
-						fs.removeSync(dir);
-					}
+					else dirMode = action;
 				}
 			}
 		}
 
 		if (repository) await downGitRepoPromise(repository, dir);
 		else {
-			const creator = new Creator(name, options);
+			const creator = new Creator(name, dir, getPromptModules(), dirMode);
+			creator.create();
 		}
 	} catch (error) {
 		throw error;
